@@ -17,6 +17,8 @@
     
     int positionIndex;
     int colorIndex;
+    
+    GLuint triangleVBO;
 }
 
 

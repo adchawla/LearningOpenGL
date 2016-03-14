@@ -16,13 +16,15 @@ float verticesAndColors[] = {
     -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0
 };
 
-unsigned char indices[] = { 0, 1, 2};
+GLubyte indices[] = { 0, 1, 2};
 
 
 @interface ViewController ()
 -(void) initGL;
 -(void) drawTriangle;
 -(void) drawQuad;
+-(void) drawTriangleUsingVBO;
+-(void) initTriangleVBO;
 @end
 
 @implementation ViewController
@@ -57,12 +59,45 @@ unsigned char indices[] = { 0, 1, 2};
     colorIndex = glGetAttribLocation(programObject, "a_Color");
     
     [self initGL];
+    [self initTriangleVBO];
 }
 
 -(void) initGL {
     // set the clear color
     glClearColor( 1.0, 0.0, 0.0, 1.0 );
     glClearDepthf(1.0);
+}
+
+-(void) initTriangleVBO {
+    // create an indentifier for the VBO
+    glGenBuffers(1, &triangleVBO);
+    
+    // bind to the VBO
+    glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+    
+    // copy vertex data to the VBO
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 21, verticesAndColors, GL_STATIC_DRAW);
+    
+    //unbind from VBO
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+-(void) drawTriangleUsingVBO {
+    //enable writing ot the postion variable
+    glEnableVertexAttribArray(positionIndex);
+    glEnableVertexAttribArray(colorIndex);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, 0);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, (void*)12);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDisableVertexAttribArray(positionIndex);
+    glDisableVertexAttribArray(colorIndex);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+
 }
 
 -(void) drawTriangle {
@@ -106,7 +141,7 @@ unsigned char indices[] = { 0, 1, 2};
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
     
-    [self drawTriangle];
+    [self drawTriangleUsingVBO];
     [self drawQuad];
     
     //flush the opengl pipeline so that the commands get set to GPU
