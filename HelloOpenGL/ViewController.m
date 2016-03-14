@@ -16,6 +16,9 @@ float verticesAndColors[] = {
     -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0
 };
 
+unsigned char indices[] = { 0, 1, 2};
+
+
 @interface ViewController ()
 -(void) initGL;
 -(void) drawTriangle;
@@ -70,7 +73,8 @@ float verticesAndColors[] = {
     glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
     glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
     
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);
     glDisableVertexAttribArray(positionIndex);
     glDisableVertexAttribArray(colorIndex);
     
