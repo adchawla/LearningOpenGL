@@ -18,6 +18,8 @@ float verticesAndColors[] = {
 
 @interface ViewController ()
 -(void) initGL;
+-(void) drawTriangle;
+-(void) drawQuad;
 @end
 
 @implementation ViewController
@@ -60,6 +62,39 @@ float verticesAndColors[] = {
     glClearDepthf(1.0);
 }
 
+-(void) drawTriangle {
+    //enable writing ot the postion variable
+    glEnableVertexAttribArray(positionIndex);
+    glEnableVertexAttribArray(colorIndex);
+    
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
+    
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDisableVertexAttribArray(positionIndex);
+    glDisableVertexAttribArray(colorIndex);
+    
+}
+
+-(void) drawQuad {
+    float stripVertices[] = {
+        -0.5,   -0.5,   0.0,    1.0,    1.0,    0.0,    1.0,
+        0.5,    -0.5,    0.0,    1.0,    1.0,    0.0,    1.0,
+        -0.5,   0.0,    0.0,    1.0,    1.0,    0.0,    1.0,
+        0.5,    0.0,    0.0,    1.0,    1.0,    0.0,    1.0
+    };
+    glEnableVertexAttribArray(positionIndex);
+    glEnableVertexAttribArray(colorIndex);
+    
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, stripVertices);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, stripVertices + 3);
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDisableVertexAttribArray(positionIndex);
+    glDisableVertexAttribArray(colorIndex);
+    
+}
+
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect {
     // rendering function
     
@@ -67,17 +102,9 @@ float verticesAndColors[] = {
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
     
-    //enable writing ot the postion variable
-    glEnableVertexAttribArray(positionIndex);
-    glEnableVertexAttribArray(colorIndex);
-
-    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
-    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
-
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDisableVertexAttribArray(positionIndex);
-    glDisableVertexAttribArray(colorIndex);
-
+    [self drawTriangle];
+    [self drawQuad];
+    
     //flush the opengl pipeline so that the commands get set to GPU
     glFlush();
 }
