@@ -10,6 +10,12 @@
 
 float vertices[] = { 0.5, 0.0, 0.0,     0.0, 0.5, 0.0,  -0.5, 0.0, 0.0};
 float colors[] = { 1.0, 0.0, 0.0, 1.0,  0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+float verticesAndColors[] = {
+    0.5,    0.0,    0.0,    1.0,    0.0,    0.0,    1.0,
+    0.0,    0.5,    0.0,    0.0,    1.0,    0.0,    1.0,
+    -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0
+};
+
 @interface ViewController ()
 -(void) initGL;
 @end
@@ -65,8 +71,8 @@ float colors[] = { 1.0, 0.0, 0.0, 1.0,  0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
 
-    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 0, vertices);
-    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 0, colors);
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glDisableVertexAttribArray(positionIndex);
