@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "ShaderHelper.h"
 
 @interface ViewController : GLKViewController {
     EAGLContext* context;
+    ShaderHelper* shaderHelper;
+    int programObject;
+    
+    int positionIndex;
+    int colorIndex;
 }
 
 

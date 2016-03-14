@@ -15,6 +15,7 @@
 		466E2B561C969CC0003B0360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 466E2B541C969CC0003B0360 /* LaunchScreen.xib */; };
 		466E2B621C969CC0003B0360 /* HelloOpenGLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B611C969CC0003B0360 /* HelloOpenGLTests.m */; };
 		466E2B6C1C969CDD003B0360 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466E2B6B1C969CDD003B0360 /* GLKit.framework */; };
+		466E2B721C96B9AF003B0360 /* ShaderHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B711C96B9AF003B0360 /* ShaderHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		466E2B601C969CC0003B0360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		466E2B611C969CC0003B0360 /* HelloOpenGLTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloOpenGLTests.m; sourceTree = "<group>"; };
 		466E2B6B1C969CDD003B0360 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		466E2B701C96B9AF003B0360 /* ShaderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderHelper.h; sourceTree = "<group>"; };
+		466E2B711C96B9AF003B0360 /* ShaderHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,8 @@
 		466E2B451C969CC0003B0360 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				466E2B701C96B9AF003B0360 /* ShaderHelper.h */,
+				466E2B711C96B9AF003B0360 /* ShaderHelper.m */,
 				466E2B461C969CC0003B0360 /* Info.plist */,
 				466E2B471C969CC0003B0360 /* main.m */,
 			);
@@ -223,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				466E2B721C96B9AF003B0360 /* ShaderHelper.m in Sources */,
 				466E2B4E1C969CC0003B0360 /* ViewController.m in Sources */,
 				466E2B4B1C969CC0003B0360 /* AppDelegate.m in Sources */,
 				466E2B481C969CC0003B0360 /* main.m in Sources */,
