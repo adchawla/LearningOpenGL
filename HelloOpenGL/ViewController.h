@@ -17,9 +17,10 @@
     
     int positionIndex;
     int colorIndex;
-    int offsetIndex;
-    float xPosOffset;
-    
+    int matIndex;
+    GLKMatrix4 modelMatrix;
+    float angle;
+    float scale;
     GLuint triangleVBO;
 }
 - (IBAction)UpdateVBO:(id)sender;

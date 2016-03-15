@@ -60,8 +60,9 @@ GLubyte indices[] = { 0, 1, 2};
     // get the index of the attribute named "a_Position"
     positionIndex = glGetAttribLocation(programObject, "a_Position");
     colorIndex = glGetAttribLocation(programObject, "a_Color");
-    offsetIndex = glGetUniformLocation(programObject, "u_PositionOffset");
-    xPosOffset = 0.0;
+    matIndex = glGetUniformLocation(programObject, "u_ModelMatrix");
+    angle = 0.0;
+    scale = 0.0;
     
     [self initGL];
     [self initTriangleVBO];
@@ -155,15 +156,20 @@ GLubyte indices[] = { 0, 1, 2};
 -(void) glkView:(GLKView *)view drawInRect:(CGRect)rect {
     // rendering function
     
-    xPosOffset += 0.01;
-    if ( xPosOffset > 1.0 ) xPosOffset = -1.0f;
     //clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
-    //glViewport(0, 0, 1000, 1000);
+    glViewport(0, 0, 500, 500);
     
-    //write the uniform offset value
-    glUniform4f(offsetIndex, xPosOffset, 0, 0, 0);
+    angle += 0.1;
+    if ( angle >= 360.0 ) angle = 0.0;
+    scale += 0.01; if (scale >= 2.0 ) scale = 1.0;
+    modelMatrix = GLKMatrix4Identity;
+    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
+    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 0.0, 1.0);
+    // write the matrix to the shader
+    glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
+
     [self drawTriangleUsingVBO];
     [self drawQuad];
     
