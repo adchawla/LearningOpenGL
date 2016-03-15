@@ -136,10 +136,10 @@ GLubyte indices[] = { 0, 1, 2};
 
 -(void) drawQuad {
     float stripVertices[] = {
-        -0.5,   -0.5,   0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    -0.5,    0.0,    1.0,    1.0,    0.0,    1.0,
-        -0.5,   0.0,    0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    0.0,    0.0,    1.0,    1.0,    0.0,    1.0
+        -0.5,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,
+        0.5,    -0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
+        -0.5,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
+        0.5,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0
     };
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
@@ -161,16 +161,23 @@ GLubyte indices[] = { 0, 1, 2};
     glClear(GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, 500, 500);
     
-    angle += 0.1;
+    angle += 1.0;
     if ( angle >= 360.0 ) angle = 0.0;
-    scale += 0.01; if (scale >= 2.0 ) scale = 1.0;
+ //   scale += 0.01; if (scale >= 2.0 ) scale = 1.0;
     modelMatrix = GLKMatrix4Identity;
-    modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 0.0, 1.0);
+    //modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
+    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 1.0, 0.0);
     // write the matrix to the shader
     glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
 
     [self drawTriangleUsingVBO];
+    
+    modelMatrix = GLKMatrix4Identity;
+    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, -0.25, 0.0);
+    //modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
+    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 1.0, 0.0, 0.0);
+    glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
+
     [self drawQuad];
     
     //flush the opengl pipeline so that the commands get set to GPU
