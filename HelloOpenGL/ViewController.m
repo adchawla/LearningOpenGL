@@ -66,6 +66,7 @@ GLubyte indices[] = { 0, 1, 2};
 }
 
 -(void) initGL {
+    glViewport(0, 0, 300, 300);
     // set the clear color
     glClearColor( 1.0, 0.0, 0.0, 1.0 );
     glClearDepthf(1.0);
@@ -132,10 +133,10 @@ GLubyte indices[] = { 0, 1, 2};
 
 -(void) drawQuad {
     float stripVertices[] = {
-        -0.5,   -0.5,   0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    -0.5,    0.0,    1.0,    1.0,    0.0,    1.0,
-        -0.5,   0.0,    0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    0.0,    0.0,    1.0,    1.0,    0.0,    1.0
+        -1.0,   -1.0,   0.0,    1.0,    1.0,    0.0,    1.0,
+        1,0,    -1.0,    0.0,    1.0,    1.0,    0.0,    1.0,
+        -1.0,   0.0,    0.0,    1.0,    1.0,    0.0,    1.0,
+        1.0,    0.0,    0.0,    1.0,    1.0,    0.0,    1.0
     };
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
@@ -155,7 +156,7 @@ GLubyte indices[] = { 0, 1, 2};
     //clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
-    
+    glViewport(0, 0, 1000, 1000);
     [self drawTriangleUsingVBO];
     [self drawQuad];
     
