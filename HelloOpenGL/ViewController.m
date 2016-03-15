@@ -63,6 +63,7 @@ GLubyte indices[] = { 0, 1, 2};
     positionIndex = glGetAttribLocation(programObject, "a_Position");
     colorIndex = glGetAttribLocation(programObject, "a_Color");
     matIndex = glGetUniformLocation(programObject, "u_ModelMatrix");
+    projectionMatrixIndex = glGetUniformLocation(programObject, "u_ProjectionMatrix");
     angle = 0.0;
     scale = 0.0;
     
@@ -76,6 +77,11 @@ GLubyte indices[] = { 0, 1, 2};
     glClearColor( 1.0, 0.0, 0.0, 1.0 );
     glClearDepthf(1.0);
     glEnable(GL_DEPTH_TEST);
+    
+    projectionMatrix = GLKMatrix4Identity;
+    float aspect = (float) self.view.bounds.size.width/(float)self.view.bounds.size.height;
+    projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45), aspect, 0.1, 100.0);
+    glUniformMatrix4fv(projectionMatrixIndex, 1, false, projectionMatrix.m);
 }
 
 -(void) initTriangleVBO {
@@ -162,12 +168,13 @@ GLubyte indices[] = { 0, 1, 2};
     //clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, 500, 500);
+    //glViewport(0, 0, 1000, 1000);
     
     angle += 1.0;
     if ( angle >= 360.0 ) angle = 0.0;
  
     modelMatrix = GLKMatrix4Identity;
+    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, 0.0, -5.0 );
     modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 1.0, 0.0);
     // write the matrix to the shader
     glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);

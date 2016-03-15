@@ -18,7 +18,9 @@
     int positionIndex;
     int colorIndex;
     int matIndex;
+    int projectionMatrixIndex;
     GLKMatrix4 modelMatrix;
+    GLKMatrix4 projectionMatrix;
     float angle;
     float scale;
     GLuint triangleVBO;
