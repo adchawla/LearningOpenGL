@@ -22,6 +22,7 @@
     float angle;
     float scale;
     GLuint triangleVBO;
+    GLuint sunVBO;
 }
 - (IBAction)UpdateVBO:(id)sender;
 

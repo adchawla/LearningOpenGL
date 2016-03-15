@@ -28,6 +28,7 @@ GLubyte indices[] = { 0, 1, 2};
 -(void) drawTriangleUsingVBO;
 -(void) initTriangleVBO;
 -(void) updateVBO;
+
 @end
 
 @implementation ViewController
@@ -42,6 +43,7 @@ GLubyte indices[] = { 0, 1, 2};
     // associate the context with the GLKView
     GLKView* view = (GLKView*) self.view;
     view.context = context;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     
     // make the context current
     [EAGLContext setCurrentContext:context];
@@ -73,6 +75,7 @@ GLubyte indices[] = { 0, 1, 2};
     // set the clear color
     glClearColor( 1.0, 0.0, 0.0, 1.0 );
     glClearDepthf(1.0);
+    glEnable(GL_DEPTH_TEST);
 }
 
 -(void) initTriangleVBO {
@@ -136,10 +139,10 @@ GLubyte indices[] = { 0, 1, 2};
 
 -(void) drawQuad {
     float stripVertices[] = {
-        -0.5,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    -0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
-        -0.5,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
-        0.5,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0
+        -0.25,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,
+        0.25,    -0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
+        -0.25,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
+        0.25,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0
     };
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
@@ -163,22 +166,18 @@ GLubyte indices[] = { 0, 1, 2};
     
     angle += 1.0;
     if ( angle >= 360.0 ) angle = 0.0;
- //   scale += 0.01; if (scale >= 2.0 ) scale = 1.0;
+ 
     modelMatrix = GLKMatrix4Identity;
-    //modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
     modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 1.0, 0.0);
     // write the matrix to the shader
     glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
-
-    [self drawTriangleUsingVBO];
-    
-    modelMatrix = GLKMatrix4Identity;
-    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, -0.25, 0.0);
-    //modelMatrix = GLKMatrix4Scale(modelMatrix, scale, scale, 1.0);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 1.0, 0.0, 0.0);
-    glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
-
     [self drawQuad];
+
+    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.8, 0.0, 0.0);
+    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(-angle), 0.0, 1.0, 0.0);
+    modelMatrix = GLKMatrix4Scale(modelMatrix, 0.5, 0.5, 0.5);
+    glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);
+    [self drawTriangleUsingVBO];
     
     //flush the opengl pipeline so that the commands get set to GPU
     glFlush();
