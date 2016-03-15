@@ -64,8 +64,13 @@ GLubyte indices[] = { 0, 1, 2};
     colorIndex = glGetAttribLocation(programObject, "a_Color");
     matIndex = glGetUniformLocation(programObject, "u_ModelMatrix");
     projectionMatrixIndex = glGetUniformLocation(programObject, "u_ProjectionMatrix");
+    viewMatrixIndex = glGetUniformLocation(programObject, "u_ViewMatrix");
+    NSLog(@"ViewMatrixIndex:%d",viewMatrixIndex);
+    NSLog(@"matIndex:%d",matIndex);
+    NSLog(@"projectionMatrixIndex:%d",projectionMatrixIndex);
     angle = 0.0;
     scale = 0.0;
+    xPos = 0.0;
     
     [self initGL];
     [self initTriangleVBO];
@@ -172,9 +177,13 @@ GLubyte indices[] = { 0, 1, 2};
     
     angle += 1.0;
     if ( angle >= 360.0 ) angle = 0.0;
+    
  
+    viewMatrix = GLKMatrix4Identity;
+    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 5.0, 0, 0, 0, 1.0, 1, 0);
+    glUniformMatrix4fv(viewMatrixIndex, 1, false, viewMatrix.m);
     modelMatrix = GLKMatrix4Identity;
-    modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, 0.0, -5.0 );
+    //modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, 0.0, -5.0 );
     modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(angle), 0.0, 1.0, 0.0);
     // write the matrix to the shader
     glUniformMatrix4fv(matIndex, 1, false, modelMatrix.m);

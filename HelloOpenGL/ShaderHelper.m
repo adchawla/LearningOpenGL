@@ -15,8 +15,9 @@ const char * V_SRC =
     "attribute vec4 a_Position; attribute vec4 a_Color; \n"
     "uniform mat4 u_ModelMatrix; \n"
     "uniform mat4 u_ProjectionMatrix; \n"
+    "uniform mat4 u_ViewMatrix; \n"
     "varying vec4 v_Color; \n"
-    "void main() { gl_Position = u_ProjectionMatrix * u_ModelMatrix * a_Position; v_Color = a_Color;}";
+    "void main() { gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position; v_Color = a_Color;}";
 const char * F_SRC = "precision highp float; varying vec4 v_Color; void main() { gl_FragColor = v_Color; }";
 
 @interface ShaderHelper()

@@ -19,10 +19,13 @@
     int colorIndex;
     int matIndex;
     int projectionMatrixIndex;
+    int viewMatrixIndex;
     GLKMatrix4 modelMatrix;
     GLKMatrix4 projectionMatrix;
+    GLKMatrix4 viewMatrix;
     float angle;
     float scale;
+    float xPos;
     GLuint triangleVBO;
     GLuint sunVBO;
 }
