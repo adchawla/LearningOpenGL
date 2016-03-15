@@ -16,6 +16,8 @@ float verticesAndColors[] = {
     -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0
 };
 
+float rightAngleTriangle = 0.5;
+
 GLubyte indices[] = { 0, 1, 2};
 
 
@@ -25,6 +27,7 @@ GLubyte indices[] = { 0, 1, 2};
 -(void) drawQuad;
 -(void) drawTriangleUsingVBO;
 -(void) initTriangleVBO;
+-(void) updateVBO;
 @end
 
 @implementation ViewController
@@ -115,6 +118,18 @@ GLubyte indices[] = { 0, 1, 2};
     
 }
 
+-(void) updateVBO {
+    // bind to the VBO
+    glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+    
+    // update vertex data to the VBO
+    glBufferSubData(GL_ARRAY_BUFFER, 28, 4, &rightAngleTriangle);
+    
+    //unbind from VBO
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+}
+
 -(void) drawQuad {
     float stripVertices[] = {
         -0.5,   -0.5,   0.0,    1.0,    1.0,    0.0,    1.0,
@@ -153,4 +168,7 @@ GLubyte indices[] = { 0, 1, 2};
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)UpdateVBO:(id)sender {
+    [self updateVBO];
+}
 @end

@@ -20,6 +20,7 @@
     
     GLuint triangleVBO;
 }
+- (IBAction)UpdateVBO:(id)sender;
 
 
 @end
