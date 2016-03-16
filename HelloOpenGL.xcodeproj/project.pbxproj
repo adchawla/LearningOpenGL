@@ -17,6 +17,14 @@
 		466E2B621C969CC0003B0360 /* HelloOpenGLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B611C969CC0003B0360 /* HelloOpenGLTests.m */; };
 		466E2B6C1C969CDD003B0360 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 466E2B6B1C969CDD003B0360 /* GLKit.framework */; };
 		466E2B721C96B9AF003B0360 /* ShaderHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B711C96B9AF003B0360 /* ShaderHelper.m */; };
+		46EE58011C9919640012701A /* mipmap1.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57F91C9919640012701A /* mipmap1.png */; };
+		46EE58021C9919640012701A /* mipmap2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FA1C9919640012701A /* mipmap2.png */; };
+		46EE58031C9919640012701A /* mipmap4.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FB1C9919640012701A /* mipmap4.png */; };
+		46EE58041C9919640012701A /* mipmap8.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FC1C9919640012701A /* mipmap8.png */; };
+		46EE58051C9919640012701A /* mipmap16.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FD1C9919640012701A /* mipmap16.png */; };
+		46EE58061C9919640012701A /* mipmap32.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FE1C9919640012701A /* mipmap32.png */; };
+		46EE58071C9919640012701A /* mipmap64.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE57FF1C9919640012701A /* mipmap64.png */; };
+		46EE58081C9919640012701A /* mipmap128.png in Resources */ = {isa = PBXBuildFile; fileRef = 46EE58001C9919640012701A /* mipmap128.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +55,14 @@
 		466E2B6B1C969CDD003B0360 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		466E2B701C96B9AF003B0360 /* ShaderHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderHelper.h; sourceTree = "<group>"; };
 		466E2B711C96B9AF003B0360 /* ShaderHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderHelper.m; sourceTree = "<group>"; };
+		46EE57F91C9919640012701A /* mipmap1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap1.png; path = HelloOpenGL/Images.xcassets/mipmap1.png; sourceTree = "<group>"; };
+		46EE57FA1C9919640012701A /* mipmap2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap2.png; path = HelloOpenGL/Images.xcassets/mipmap2.png; sourceTree = "<group>"; };
+		46EE57FB1C9919640012701A /* mipmap4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap4.png; path = HelloOpenGL/Images.xcassets/mipmap4.png; sourceTree = "<group>"; };
+		46EE57FC1C9919640012701A /* mipmap8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap8.png; path = HelloOpenGL/Images.xcassets/mipmap8.png; sourceTree = "<group>"; };
+		46EE57FD1C9919640012701A /* mipmap16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap16.png; path = HelloOpenGL/Images.xcassets/mipmap16.png; sourceTree = "<group>"; };
+		46EE57FE1C9919640012701A /* mipmap32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap32.png; path = HelloOpenGL/Images.xcassets/mipmap32.png; sourceTree = "<group>"; };
+		46EE57FF1C9919640012701A /* mipmap64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap64.png; path = HelloOpenGL/Images.xcassets/mipmap64.png; sourceTree = "<group>"; };
+		46EE58001C9919640012701A /* mipmap128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mipmap128.png; path = HelloOpenGL/Images.xcassets/mipmap128.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +87,14 @@
 		466E2B391C969CC0003B0360 = {
 			isa = PBXGroup;
 			children = (
+				46EE57F91C9919640012701A /* mipmap1.png */,
+				46EE57FA1C9919640012701A /* mipmap2.png */,
+				46EE57FB1C9919640012701A /* mipmap4.png */,
+				46EE57FC1C9919640012701A /* mipmap8.png */,
+				46EE57FD1C9919640012701A /* mipmap16.png */,
+				46EE57FE1C9919640012701A /* mipmap32.png */,
+				46EE57FF1C9919640012701A /* mipmap64.png */,
+				46EE58001C9919640012701A /* mipmap128.png */,
 				46182EA81C99126100E7C0A1 /* DSC_0050-3.jpg */,
 				466E2B6B1C969CDD003B0360 /* GLKit.framework */,
 				466E2B441C969CC0003B0360 /* HelloOpenGL */,
@@ -211,7 +235,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46EE58021C9919640012701A /* mipmap2.png in Resources */,
+				46EE58071C9919640012701A /* mipmap64.png in Resources */,
+				46EE58031C9919640012701A /* mipmap4.png in Resources */,
+				46EE58051C9919640012701A /* mipmap16.png in Resources */,
+				46EE58041C9919640012701A /* mipmap8.png in Resources */,
+				46EE58061C9919640012701A /* mipmap32.png in Resources */,
 				466E2B511C969CC0003B0360 /* Main.storyboard in Resources */,
+				46EE58081C9919640012701A /* mipmap128.png in Resources */,
+				46EE58011C9919640012701A /* mipmap1.png in Resources */,
 				466E2B561C969CC0003B0360 /* LaunchScreen.xib in Resources */,
 				466E2B531C969CC0003B0360 /* Images.xcassets in Resources */,
 				46182EA91C99126100E7C0A1 /* DSC_0050-3.jpg in Resources */,
