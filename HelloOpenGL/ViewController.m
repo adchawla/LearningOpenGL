@@ -121,6 +121,10 @@ GLubyte indices[] = { 0, 1, 2};
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     
+    // specify the wrapping around x and y axis
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    
     glBindTexture(GL_TEXTURE_2D, 0 );
     free(spriteData);
     
@@ -191,10 +195,10 @@ GLubyte indices[] = { 0, 1, 2};
 
 -(void) drawQuad {
     float stripVertices[] = {
-        -0.25,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,  0,  1,
-        0.25,    -0.25,    0.0,    1.0,    1.0,    0.0,   1.0,  1,  1,
+        -0.25,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,  0,  3,
+        0.25,    -0.25,    0.0,    1.0,    1.0,    0.0,   1.0,  2,  3,
         -0.25,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,  0,  0,
-        0.25,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0,  1,  0
+        0.25,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0,  2,  0
     };
     //make the texture unit 0 active
     glActiveTexture(GL_TEXTURE0);
