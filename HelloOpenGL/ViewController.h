@@ -17,6 +17,10 @@
     
     int positionIndex;
     int colorIndex;
+    int textureCoordinateIndex;
+    int activeTextureIndex;
+    int textureId;
+    
     int matIndex;
     int projectionMatrixIndex;
     int viewMatrixIndex;
@@ -27,7 +31,6 @@
     float scale;
     float xPos;
     GLuint triangleVBO;
-    GLuint sunVBO;
 }
 - (IBAction)UpdateVBO:(id)sender;
 

@@ -11,9 +11,9 @@
 float vertices[] = { 0.5, 0.0, 0.0,     0.0, 0.5, 0.0,  -0.5, 0.0, 0.0};
 float colors[] = { 1.0, 0.0, 0.0, 1.0,  0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
 float verticesAndColors[] = {
-    0.5,    0.0,    0.0,    1.0,    0.0,    0.0,    1.0,
-    0.0,    0.5,    0.0,    0.0,    1.0,    0.0,    1.0,
-    -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0
+    0.5,    0.0,    0.0,    1.0,    0.0,    0.0,    1.0, 1,1,
+    0.0,    0.5,    0.0,    0.0,    1.0,    0.0,    1.0, 0.5, 0,
+    -0.5,   0.0,    0.0,    0.0,    0.0,    1.0,    1.0, 0, 1
 };
 
 float rightAngleTriangle = 0.5;
@@ -28,7 +28,7 @@ GLubyte indices[] = { 0, 1, 2};
 -(void) drawTriangleUsingVBO;
 -(void) initTriangleVBO;
 -(void) updateVBO;
-
+-(int) loadTexture:(NSString*)fileName;
 @end
 
 @implementation ViewController
@@ -65,9 +65,8 @@ GLubyte indices[] = { 0, 1, 2};
     matIndex = glGetUniformLocation(programObject, "u_ModelMatrix");
     projectionMatrixIndex = glGetUniformLocation(programObject, "u_ProjectionMatrix");
     viewMatrixIndex = glGetUniformLocation(programObject, "u_ViewMatrix");
-    NSLog(@"ViewMatrixIndex:%d",viewMatrixIndex);
-    NSLog(@"matIndex:%d",matIndex);
-    NSLog(@"projectionMatrixIndex:%d",projectionMatrixIndex);
+    textureCoordinateIndex = glGetAttribLocation(programObject, "a_TextureCoordinate");
+    activeTextureIndex = glGetUniformLocation(programObject, "u_ActiveTexture");
     angle = 0.0;
     scale = 0.0;
     xPos = 0.0;
@@ -87,6 +86,45 @@ GLubyte indices[] = { 0, 1, 2};
     float aspect = (float) self.view.bounds.size.width/(float)self.view.bounds.size.height;
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45), aspect, 0.1, 100.0);
     glUniformMatrix4fv(projectionMatrixIndex, 1, false, projectionMatrix.m);
+    
+    textureId = [self loadTexture:@"DSC_0050-3.jpg"];
+}
+
+-(int)loadTexture:(NSString*) fileName {
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    
+    CGImageRef spriteImage = [UIImage imageNamed:fileName].CGImage;
+    if (!spriteImage) {
+        NSLog(@"Failed to load image %@", fileName);
+        exit(1);
+    }
+    
+    // 2
+    size_t width = CGImageGetWidth(spriteImage);
+    size_t height = CGImageGetHeight(spriteImage);
+    
+    GLubyte * spriteData = (GLubyte*) calloc(width * height * 4, sizeof(GLubyte));
+    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width * 4, CGImageGetColorSpace(spriteImage), kCGImageAlphaPremultipliedLast);
+    
+    //3
+    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
+    CGContextRelease(spriteContext);
+    
+    // bind to texture
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    
+    //upload sprite image data to the texture object
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
+    
+    // specify the minification and magnification parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    glBindTexture(GL_TEXTURE_2D, 0 );
+    free(spriteData);
+    
+    return textureID;
 }
 
 -(void) initTriangleVBO {
@@ -97,7 +135,7 @@ GLubyte indices[] = { 0, 1, 2};
     glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
     
     // copy vertex data to the VBO
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 21, verticesAndColors, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 27, verticesAndColors, GL_STATIC_DRAW);
     
     //unbind from VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -107,15 +145,18 @@ GLubyte indices[] = { 0, 1, 2};
     //enable writing ot the postion variable
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
+    glEnableVertexAttribArray(textureCoordinateIndex);
     
     glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, 0);
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 36, 0);
     glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, (void*)12);
-    
+    glVertexAttribPointer(textureCoordinateIndex, 2, GL_FLOAT, false, 36, (void*)28);
+
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glDisableVertexAttribArray(positionIndex);
     glDisableVertexAttribArray(colorIndex);
-
+    glDisableVertexAttribArray(textureCoordinateIndex);
+    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
 
@@ -150,20 +191,32 @@ GLubyte indices[] = { 0, 1, 2};
 
 -(void) drawQuad {
     float stripVertices[] = {
-        -0.25,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,
-        0.25,    -0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
-        -0.25,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,
-        0.25,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0
+        -0.25,   -0.25,   0.0,    1.0,    1.0,    0.0,    1.0,  0,  1,
+        0.25,    -0.25,    0.0,    1.0,    1.0,    0.0,   1.0,  1,  1,
+        -0.25,   0.25,    0.0,    1.0,    1.0,    0.0,    1.0,  0,  0,
+        0.25,    0.25,    0.0,    1.0,    1.0,    0.0,    1.0,  1,  0
     };
+    //make the texture unit 0 active
+    glActiveTexture(GL_TEXTURE0);
+    
+    //bind the texture to the active texture unit 0
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    
+    // tell the fragment shader that texture unit 0 is active
+    glUniform1i(activeTextureIndex, 0);
+    
     glEnableVertexAttribArray(positionIndex);
     glEnableVertexAttribArray(colorIndex);
+    glEnableVertexAttribArray(textureCoordinateIndex);
     
-    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, stripVertices);
-    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, stripVertices + 3);
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 36, stripVertices);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 36, stripVertices + 3);
+    glVertexAttribPointer(textureCoordinateIndex, 2, GL_FLOAT, false, 36, stripVertices + 7);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glDisableVertexAttribArray(positionIndex);
     glDisableVertexAttribArray(colorIndex);
+    glDisableVertexAttribArray(textureCoordinateIndex);
     
 }
 
@@ -180,7 +233,7 @@ GLubyte indices[] = { 0, 1, 2};
     
  
     viewMatrix = GLKMatrix4Identity;
-    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 5.0, 0, 0, 0, 1.0, 1, 0);
+    viewMatrix = GLKMatrix4MakeLookAt(0, 0, 5.0, 0, 0, 0, 0.0, 1, 0);
     glUniformMatrix4fv(viewMatrixIndex, 1, false, viewMatrix.m);
     modelMatrix = GLKMatrix4Identity;
     //modelMatrix = GLKMatrix4Translate(modelMatrix, 0.0, 0.0, -5.0 );

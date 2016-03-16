@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46182EA91C99126100E7C0A1 /* DSC_0050-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46182EA81C99126100E7C0A1 /* DSC_0050-3.jpg */; };
 		466E2B481C969CC0003B0360 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B471C969CC0003B0360 /* main.m */; };
 		466E2B4B1C969CC0003B0360 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B4A1C969CC0003B0360 /* AppDelegate.m */; };
 		466E2B4E1C969CC0003B0360 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E2B4D1C969CC0003B0360 /* ViewController.m */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		46182EA81C99126100E7C0A1 /* DSC_0050-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "DSC_0050-3.jpg"; path = "HelloOpenGL/Images.xcassets/DSC_0050-3.jpg"; sourceTree = "<group>"; };
 		466E2B421C969CC0003B0360 /* HelloOpenGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloOpenGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		466E2B461C969CC0003B0360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		466E2B471C969CC0003B0360 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		466E2B391C969CC0003B0360 = {
 			isa = PBXGroup;
 			children = (
+				46182EA81C99126100E7C0A1 /* DSC_0050-3.jpg */,
 				466E2B6B1C969CDD003B0360 /* GLKit.framework */,
 				466E2B441C969CC0003B0360 /* HelloOpenGL */,
 				466E2B5E1C969CC0003B0360 /* HelloOpenGLTests */,
@@ -211,6 +214,7 @@
 				466E2B511C969CC0003B0360 /* Main.storyboard in Resources */,
 				466E2B561C969CC0003B0360 /* LaunchScreen.xib in Resources */,
 				466E2B531C969CC0003B0360 /* Images.xcassets in Resources */,
+				46182EA91C99126100E7C0A1 /* DSC_0050-3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +430,7 @@
 				466E2B671C969CC0003B0360 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		466E2B681C969CC0003B0360 /* Build configuration list for PBXNativeTarget "HelloOpenGLTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +439,7 @@
 				466E2B6A1C969CC0003B0360 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
