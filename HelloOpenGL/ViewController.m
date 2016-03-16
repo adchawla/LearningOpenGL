@@ -17,12 +17,43 @@ float verticesAndColors[] = {
     -0.8,    -0.8,   0.0,    0.0,    1.0,    0.0,    1.0
 };
 
+float red_quad[] = {
+    0.8,    0.8,    0.0,    1.0,    0.0,    0.0,    0.5,
+    -0.8,    0.8,    0.0,    1.0,    0.0,    0.0,    0.5,
+    0.8,   -0.8,    0.0,    1.0,    0.0,    0.0,    0.5,
+    -0.8,    -0.8,   0.0,    1.0,    0.0,    0.0,    0.5
+
+};
+
+float blue_quad[] = {
+    0.6,    0.8,    0.0,    0.0,    0.0,    1.0,    0.5,
+    -0.8,    0.8,    0.0,    0.0,    0.0,    1.0,    0.5,
+    0.6,   -0.8,    0.0,    0.0,    0.0,    1.0,    0.5,
+    -0.8,    -0.8,   0.0,    0.0,    0.0,    1.0,    0.5
+    
+};
+
 @interface ViewController ()
 -(void) initGL;
 -(void) drawClipTriangle;
+-(void) drawQuad:(float*)verticesAndColors;
 @end
 
 @implementation ViewController
+
+-(void) drawQuad:(float*)verticesAndColors {
+    //enable writing ot the postion variable
+    glEnableVertexAttribArray(positionIndex);
+    glEnableVertexAttribArray(colorIndex);
+    
+    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
+    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDisableVertexAttribArray(positionIndex);
+    glDisableVertexAttribArray(colorIndex);
+
+}
 
 -(void) drawClipTriangle {
     float vertices[] = { 0.5, 0.0, 0.0, 0.0, 0.5, 0.0, -0.5, 0.0, 0.0 };
@@ -43,11 +74,6 @@ float verticesAndColors[] = {
     GLKView* view = (GLKView*) self.view;
     view.context = context;
  
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
-    
-    // getting the stencil buffer
-    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
-    
     // make the context current
     [EAGLContext setCurrentContext:context];
     shaderHelper = [[ShaderHelper alloc] init];
@@ -71,12 +97,12 @@ float verticesAndColors[] = {
 
 -(void) initGL {
     // set the clear color
-    glClearColor( 1.0, 0.0, 0.0, 1.0 );
+    glClearColor( 1.0, 1.0, 1.0, 1.0 );
     glClearDepthf(1.0);
-    glClearStencil(0.0);
     
-    //glEnable(GL_DEPTH_TEST);
-    glEnable(GL_STENCIL_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
     
 }
 
@@ -84,33 +110,11 @@ float verticesAndColors[] = {
     // rendering function
     
     //clear the color buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // disable writing to the color buffer
-    glColorMask(false, false, false, false);
+    [self drawQuad:red_quad];
+    [self drawQuad:blue_quad];
     
-    // set up stencil function
-    glStencilFunc(GL_ALWAYS, 1, 1 );
-    glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-    [self drawClipTriangle];
-    
-    // enable writing to the color buffer
-    glColorMask(true, true, true, true);
-    // set up stencil test for quad
-    glStencilFunc(GL_EQUAL, 1, 1);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    
-    //enable writing ot the postion variable
-    glEnableVertexAttribArray(positionIndex);
-    glEnableVertexAttribArray(colorIndex);
-
-    glVertexAttribPointer(positionIndex, 3, GL_FLOAT, false, 28, verticesAndColors);
-    glVertexAttribPointer(colorIndex, 4, GL_FLOAT, false, 28, verticesAndColors + 3);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDisableVertexAttribArray(positionIndex);
-    glDisableVertexAttribArray(colorIndex);
-
     //flush the opengl pipeline so that the commands get set to GPU
     glFlush();
 }
